@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
-  'sossoldi#reminder', // id del canale
+  'kazfintracker#reminder', // id del canale
   'Reminder', // nome del canale
   importance: Importance.high,
 );

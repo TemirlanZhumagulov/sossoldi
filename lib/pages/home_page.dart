@@ -26,172 +26,190 @@ class _HomePageState extends ConsumerState<HomePage> with Functions {
     final accountList = ref.watch(accountsProvider);
     final lastTransactions = ref.watch(lastTransactionsProvider);
     final currencyState = ref.watch(currencyStateNotifier);
-  
+
     return Container(
       color: Theme.of(context).colorScheme.tertiary,
       child: ListView(
         children: [
           ref.watch(dashboardProvider).when(
-                data: (value) {
-                  final income = ref.watch(incomeProvider);
-                  final expense = ref.watch(expenseProvider);
-                  final total = income + expense;
-                  final currentMonthList = ref.watch(currentMonthListProvider);
-                  final lastMonthList = ref.watch(lastMonthListProvider);
+            data: (value) {
+              final income = ref.watch(incomeProvider);
+              final expense = ref.watch(expenseProvider);
+              final total = income + expense;
+              final currentMonthList = ref.watch(currentMonthListProvider);
+              final lastMonthList = ref.watch(lastMonthListProvider);
 
-                  return Column(
+              return Column(
+                children: [
+                  const SizedBox(height: 24),
+                  Row(
                     children: [
-                      const SizedBox(height: 24),
-                      Row(
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(width: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "MONTHLY BALANCE",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: numToCurrency(total),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge
-                                          ?.copyWith(color: Theme.of(context).colorScheme.primary),
-                                    ),
-                                    TextSpan(
-                                      text: currencyState.selectedCurrency.symbol,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(color: Theme.of(context).colorScheme.primary),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 30),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "INCOME",
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: numToCurrency(income),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(color: green),
-                                    ),
-                                    TextSpan(
-                                      text: currencyState.selectedCurrency.symbol,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge
-                                          ?.copyWith(color: green),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 30),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "EXPENSES",
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: numToCurrency(expense),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(color: red),
-                                    ),
-                                    TextSpan(
-                                      text: currencyState.selectedCurrency.symbol,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge
-                                          ?.copyWith(color: red),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      LineChartWidget(
-                        lineData: currentMonthList,
-                        line2Data: lastMonthList,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(width: 16),
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
                           Text(
-                            "Current month",
+                            "MONTHLY BALANCE",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
-                                ?.copyWith(color: Theme.of(context).colorScheme.primary),
+                                ?.copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary),
                           ),
-                          const SizedBox(width: 12),
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: grey2,
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: numToCurrency(total),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge
+                                      ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
+                                TextSpan(
+                                  text:
+                                  currencyState.selectedCurrency.symbol,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            "Last month",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium
-                                ?.copyWith(color: Theme.of(context).colorScheme.primary),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 22),
+                      const SizedBox(width: 30),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "INCOME",
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: numToCurrency(income),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: green),
+                                ),
+                                TextSpan(
+                                  text:
+                                  currencyState.selectedCurrency.symbol,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(color: green),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 30),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "EXPENSES",
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: numToCurrency(expense),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: red),
+                                ),
+                                TextSpan(
+                                  text:
+                                  currencyState.selectedCurrency.symbol,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.copyWith(color: red),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
-                  );
-                },
-                loading: () => const SizedBox(height: 330),
-                error: (err, stack) => Text('Error: $err'),
-              ),
+                  ),
+                  const SizedBox(height: 16),
+                  LineChartWidget(
+                    lineData: currentMonthList,
+                    line2Data: lastMonthList,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 16),
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        "Current month",
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                            color:
+                            Theme.of(context).colorScheme.primary),
+                      ),
+                      const SizedBox(width: 12),
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: grey2,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        "Last month",
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                            color:
+                            Theme.of(context).colorScheme.primary),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 22),
+                ],
+              );
+            },
+            loading: () => const SizedBox(height: 330),
+            error: (err, stack) => Text('Error: $err'),
+          ),
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer, //da modificare in darkMode
+              color: Theme.of(context)
+                  .colorScheme
+                  .primaryContainer, //da modificare in darkMode
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
@@ -218,57 +236,111 @@ class _HomePageState extends ConsumerState<HomePage> with Functions {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, i) {
                         if (i == accounts.length) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [defaultShadow],
-                              ),
-                              child: TextButton.icon(
-                                style: ButtonStyle(
-                                  maximumSize: MaterialStateProperty.all(const Size(130, 48)),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Theme.of(context).colorScheme.surface),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
+                          return Row(children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 4, 0, 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [defaultShadow],
                                 ),
-                                icon: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: blue5,
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Icon(
-                                      Icons.add_rounded,
-                                      size: 24.0,
-                                      color: white,
-                                    ),
-                                  ),
-                                ),
-                                label: Text(
-                                  "New Account",
-                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                        color: Theme.of(context).colorScheme.secondary,
+                                child: TextButton.icon(
+                                  style: ButtonStyle(
+                                    maximumSize: WidgetStateProperty.all(
+                                        const Size(130, 48)),
+                                    backgroundColor: WidgetStateProperty.all(
+                                        Theme.of(context).colorScheme.surface),
+                                    shape: WidgetStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(8.0),
                                       ),
-                                  maxLines: 2,
+                                    ),
+                                  ),
+                                  icon: Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: blue5,
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.add_rounded,
+                                        size: 24.0,
+                                        color: white,
+                                      ),
+                                    ),
+                                  ),
+                                  label: Text(
+                                    "New Account",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  onPressed: () {
+                                    ref.read(accountsProvider.notifier).reset();
+                                    Navigator.of(context)
+                                        .pushNamed('/add-account');
+                                  },
                                 ),
-                                onPressed: () {
-                                  ref.read(accountsProvider.notifier).reset();
-                                  Navigator.of(context).pushNamed('/add-account');
-                                },
                               ),
                             ),
-                          );
-                        } else if(accounts.isNotEmpty) {
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(16, 4, 0, 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [defaultShadow],
+                                ),
+                                child: TextButton.icon(
+                                  style: ButtonStyle(
+                                    maximumSize: WidgetStateProperty.all(const Size(130, 48)),
+                                    backgroundColor: WidgetStateProperty.all(
+                                        Theme.of(context).colorScheme.surface),
+                                    shape: WidgetStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                  icon: Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: blue5,
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.link_rounded,
+                                        size: 24.0,
+                                        color: white,
+                                      ),
+                                    ),
+                                  ),
+                                  label: Text(
+                                    "Link Account",
+                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: Theme.of(context).colorScheme.secondary,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed('/link-account');
+                                  },
+                                ),
+                              ),
+                            ),
+                          ]);
+                        } else if (accounts.isNotEmpty) {
                           BankAccount account = accounts[i];
                           return AccountsSum(account: account);
                         }
-
                       },
                     ),
                     loading: () => const SizedBox(),
@@ -286,7 +358,8 @@ class _HomePageState extends ConsumerState<HomePage> with Functions {
                   ),
                 ),
                 lastTransactions.when(
-                  data: (transactions) => TransactionsList(transactions: transactions),
+                  data: (transactions) =>
+                      TransactionsList(transactions: transactions),
                   loading: () => const SizedBox(),
                   error: (err, stack) => Text('Error: $err'),
                 ),

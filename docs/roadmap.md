@@ -4,10 +4,6 @@ layout: default
 nav_order: 2
 ---
 
-# Roadmap
-
-Sossoldi is an open-source project driven by a singular ambition – **to empower individuals in making deliberate financial choices**. Unlike conventional tools, this project currently operates without dates, reflecting its early-stage development as a dynamic open-source endeavor. It is designed as a mobile-first application, allowing users to easily track their net worth anywhere without the need for a PC.
-
 ## Phase 1: Income/Expense Tracking + Budgeting (Beta)
 
 **Objective:** Build a robust foundation for users to track their income, expenses, and create basic budgets.
@@ -21,7 +17,7 @@ Sossoldi is an open-source project driven by a singular ambition – **to empowe
 ### 2. Implement expense tracking with customizable categories.
 
 - Allow users to input one-time and recurring expenses.
-- Enable the user to create custom categories or subcategories 
+- Enable the user to create custom categories or subcategories
 
 ### 3. Budgeting
 
@@ -79,4 +75,4 @@ Sossoldi is an open-source project driven by a singular ambition – **to empowe
 - Integrate tooltips and guides within the app for users unfamiliar with investment terms.
 - Create a list of good resources for the users that want to learn more about personal finance.
 
-By following this roadmap, Sossoldi will evolve from a basic income/expense tracker to a comprehensive financial management tool, offering users a complete view of their finances.
+By following this roadmap, KazFinTracker will evolve from a basic income/expense tracker to a comprehensive financial management tool, offering users a complete view of their finances.

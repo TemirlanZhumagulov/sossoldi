@@ -11,7 +11,7 @@ import 'package:sossoldi/providers/statistics_provider.dart';
 import '../constants/style.dart';
 import '../custom_widgets/alert_dialog.dart';
 import '../custom_widgets/default_card.dart';
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import '../providers/accounts_provider.dart';
 import '../providers/budgets_provider.dart';
 import '../providers/categories_provider.dart';
@@ -196,7 +196,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             ElevatedButton(
               child: const Text('CLEAR DB'),
               onPressed: () async {
-                await SossoldiDatabase.instance.clearDatabase().then((v) {
+                await KazFinTrackerDatabase.instance.clearDatabase().then((v) {
                   ref.refresh(accountsProvider);
                   ref.refresh(categoriesProvider);
                   ref.refresh(transactionsProvider);
@@ -205,22 +205,22 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 });
               },
             ),
-            ElevatedButton(
-              child: const Text('CLEAR AND FILL DEMO DATA'),
-              onPressed: () async {
-                await SossoldiDatabase.instance.clearDatabase();
-                await SossoldiDatabase.instance.fillDemoData().then((value) {
-                  ref.refresh(accountsProvider);
-                  ref.refresh(categoriesProvider);
-                  ref.refresh(transactionsProvider);
-                  ref.refresh(budgetsProvider);
-                  ref.refresh(dashboardProvider);
-                  ref.refresh(lastTransactionsProvider);
-                  ref.refresh(statisticsProvider);
-                  showSuccessDialog(context, "DB Cleared, and DEMO data added");
-                });
-              },
-            ),
+            // ElevatedButton(
+            //   child: const Text('CLEAR AND FILL DEMO DATA'),
+            //   onPressed: () async {
+            //     await KazFinTrackerDatabase.instance.clearDatabase();
+            //     await KazFinTrackerDatabase.instance.fillDemoData().then((value) {
+            //       ref.refresh(accountsProvider);
+            //       ref.refresh(categoriesProvider);
+            //       ref.refresh(transactionsProvider);
+            //       ref.refresh(budgetsProvider);
+            //       ref.refresh(dashboardProvider);
+            //       ref.refresh(lastTransactionsProvider);
+            //       ref.refresh(statisticsProvider);
+            //       showSuccessDialog(context, "DB Cleared, and DEMO data added");
+            //     });
+            //   },
+            // ),
           ],
         ),
       ),

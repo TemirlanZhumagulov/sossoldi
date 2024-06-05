@@ -1,4 +1,6 @@
-import 'dart:math'; // used for random number generation in demo data
+// TODO Implement this library.import 'dart:math'; // used for random number generation in demo data
+
+import 'dart:math';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -11,17 +13,17 @@ import '../model/currency.dart';
 import '../model/recurring_transaction_amount.dart';
 import '../model/transaction.dart';
 
-class SossoldiDatabase {
-  static final SossoldiDatabase instance = SossoldiDatabase._init();
+class KazFinTrackerDatabase {
+  static final KazFinTrackerDatabase instance = KazFinTrackerDatabase._init();
   static Database? _database;
-  static String dbName = 'sossoldi.db';
+  static String dbName = 'kazfintracker.db';
 
   // Zero args constructor needed to extend this class
-  SossoldiDatabase({String? dbName}){
-    dbName = dbName ?? 'sossoldi.db';
+  KazFinTrackerDatabase({String? dbName}){
+    dbName = dbName ?? 'kazfintracker.db';
   }
 
-  SossoldiDatabase._init();
+  KazFinTrackerDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -134,6 +136,31 @@ class SossoldiDatabase {
         `${CurrencyFields.mainCurrency}` $integerNotNull CHECK (${CurrencyFields.mainCurrency} IN (0, 1))
       )
       ''');
+
+    // Messages Table
+    await database.execute('''
+      CREATE TABLE messages(
+        id $integerPrimaryKeyAutoincrement,
+        content $textNotNull,
+        createdAt $textNotNull
+      )
+    ''');
+  }
+
+  Future<void> saveMessage(String message) async {
+    final db = await database;
+    final createdAt = DateTime.now().toIso8601String();
+    await db.insert('messages', {
+      'content': message,
+      'createdAt': createdAt,
+    });
+  }
+
+  // Retrieve all messages from the database
+  Future<List<String>> getMessages() async {
+    final db = await database;
+    final result = await db.query('messages', orderBy: 'id ASC');
+    return result.map((map) => map['content'] as String).toList();
 
   }
 
@@ -268,7 +295,7 @@ class SossoldiDatabase {
   // WARNING: FOR DEV/TEST PURPOSES ONLY!!
   Future<void> deleteDatabase() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'sossoldi.db');
+    final path = join(databasePath, 'kazfintracker.db');
     databaseFactory.deleteDatabase(path);
   }
 }

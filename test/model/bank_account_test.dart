@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
-import 'package:sossoldi/database/sossoldi_database.dart';
+import 'package:sossoldi/database/kazfintracker_database.dart';
 
 import 'package:sossoldi/model/bank_account.dart';
 import 'package:sossoldi/model/base_entity.dart';
@@ -85,14 +85,14 @@ void main() {
 
   group("Bank Account Methods", () { 
 
-    late SossoldiDatabase sossoldiDatabase;
+    late KazFinTrackerDatabase sossoldiDatabase;
     late sqflite.Database db;
 
     setUpAll(() async {
       sqflite_ffi.sqfliteFfiInit();
       sqflite_ffi.databaseFactory = sqflite_ffi.databaseFactoryFfi;
 
-      sossoldiDatabase = SossoldiDatabase(dbName: 'test.db');
+      sossoldiDatabase = KazFinTrackerDatabase(dbName: 'test.db');
       db = await sossoldiDatabase.database;
       await sossoldiDatabase.clearDatabase();
     });

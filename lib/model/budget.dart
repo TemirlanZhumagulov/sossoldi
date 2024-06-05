@@ -1,5 +1,5 @@
 import '../model/transaction.dart';
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import '../model/category_transaction.dart';
 import 'base_entity.dart';
 
@@ -101,7 +101,7 @@ class BudgetStats extends BaseEntity {
       };
 }
 
-class BudgetMethods extends SossoldiDatabase {
+class BudgetMethods extends KazFinTrackerDatabase {
   Future<Budget> insert(Budget item) async {
     final db = await database;
     final id = await db.insert(budgetTable, item.toJson());

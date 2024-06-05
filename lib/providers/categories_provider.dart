@@ -14,7 +14,10 @@ class AsyncCategoriesNotifier extends AsyncNotifier<List<CategoryTransaction>> {
   }
 
   Future<List<CategoryTransaction>> _getCategories() async {
-    final categories = await CategoryTransactionMethods().selectAll();
+    final categories = await CategoryTransactionMethods().
+
+
+    selectAll();
     return categories;
   }
 

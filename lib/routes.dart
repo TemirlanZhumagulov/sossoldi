@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sossoldi/pages/accounts/link_card_page.dart';
+import 'package:sossoldi/pages/auth/login_page.dart';
+import 'package:sossoldi/pages/auth/registration_page.dart';
+import 'package:sossoldi/pages/chat_page/chat_page.dart';
 
 import 'pages/account_page/account_page.dart';
 import 'pages/accounts/account_list.dart';
@@ -25,6 +29,10 @@ Route<dynamic> makeRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/':
       return _materialPageRoute(settings.name, const Structure());
+    case '/register':
+      return _materialPageRoute(settings.name, RegistrationPage());
+    case '/login':
+      return _materialPageRoute(settings.name, LoginPage());
     case '/onboarding':
       return _materialPageRoute(settings.name, const Onboarding());
     case '/dashboard':
@@ -33,6 +41,8 @@ Route<dynamic> makeRoute(RouteSettings settings) {
       return _materialPageRoute(settings.name, const AddPage());
     case '/transactions':
       return _materialPageRoute(settings.name, const TransactionsPage());
+    case '/chat':
+      return _materialPageRoute(settings.name, const ChatPage());
     case '/category-list':
       return _cupertinoPageRoute(settings.name, const CategoryList());
     case '/add-category':
@@ -49,6 +59,8 @@ Route<dynamic> makeRoute(RouteSettings settings) {
       return _cupertinoPageRoute(settings.name, const AccountList());
     case '/add-account':
       return _cupertinoPageRoute(settings.name, const AddAccount());
+    case '/link-account':
+      return _cupertinoPageRoute(settings.name, const LinkCardPage());
     case '/planning':
       return _materialPageRoute(settings.name, const PlanningPage());
     case '/graphs':

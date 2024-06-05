@@ -1,4 +1,4 @@
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import 'bank_account.dart';
 import 'base_entity.dart';
 import 'category_transaction.dart';
@@ -185,7 +185,7 @@ class Transaction extends BaseEntity {
       };
 }
 
-class TransactionMethods extends SossoldiDatabase {
+class TransactionMethods extends KazFinTrackerDatabase {
   Future<Transaction> insert(Transaction item) async {
     final db = await database;
     final id = await db.insert(transactionTable, item.toJson());

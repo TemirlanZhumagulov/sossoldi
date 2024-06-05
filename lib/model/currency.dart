@@ -1,4 +1,4 @@
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import 'base_entity.dart';
 
 const String currencyTable = 'currency';
@@ -62,7 +62,7 @@ class Currency extends BaseEntity {
       };
 }
 
-class CurrencyMethods extends SossoldiDatabase {
+class CurrencyMethods extends KazFinTrackerDatabase {
   Future<Currency> getSelectedCurrency() async {
     final db = await database;
 

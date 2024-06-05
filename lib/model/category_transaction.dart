@@ -1,4 +1,4 @@
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import 'base_entity.dart';
 
 const String categoryTransactionTable = 'categoryTransaction';
@@ -85,7 +85,7 @@ class CategoryTransaction extends BaseEntity {
       };
 }
 
-class CategoryTransactionMethods extends SossoldiDatabase {
+class CategoryTransactionMethods extends KazFinTrackerDatabase {
   Future<CategoryTransaction> insert(CategoryTransaction item) async {
     final db = await database;
     final id = await db.insert(categoryTransactionTable, item.toJson());

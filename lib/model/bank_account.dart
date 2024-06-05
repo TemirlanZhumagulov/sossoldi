@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import 'base_entity.dart';
 import 'transaction.dart';
 import 'category_transaction.dart';
@@ -101,7 +101,7 @@ class BankAccount extends BaseEntity {
       };
 }
 
-class BankAccountMethods extends SossoldiDatabase {
+class BankAccountMethods extends KazFinTrackerDatabase {
   Future<BankAccount> insert(BankAccount item) async {
     final db = await database;
 

@@ -1,4 +1,4 @@
-import '../database/sossoldi_database.dart';
+import '../database/kazfintracker_database.dart';
 import 'base_entity.dart';
 
 const String recurringTransactionAmountTable = 'recurringTransactionAmount';
@@ -84,7 +84,7 @@ class RecurringTransactionAmount extends BaseEntity {
       };
 }
 
-class RecurringTransactionMethods extends SossoldiDatabase {
+class RecurringTransactionMethods extends KazFinTrackerDatabase {
   Future<RecurringTransactionAmount> insert(RecurringTransactionAmount item) async {
     final db = await database;
     final id = await db.insert(recurringTransactionAmountTable, item.toJson());

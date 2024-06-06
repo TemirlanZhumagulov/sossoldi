@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationService {
-  final String baseUrl = 'http://192.168.26.215:8081/api/v1/auth';  // Adjust the IP accordingly
+  final String baseUrl = 'http://192.168.89.167:8081/api/v1/auth';  // Adjust the IP accordingly
 
   Future<bool> authenticate(String email, String password) async {
     try {

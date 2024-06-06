@@ -19,7 +19,7 @@ class KazFinTrackerDatabase {
   static String dbName = 'kazfintracker.db';
 
   // Zero args constructor needed to extend this class
-  KazFinTrackerDatabase({String? dbName}){
+  KazFinTrackerDatabase({String? dbName}) {
     dbName = dbName ?? 'kazfintracker.db';
   }
 
@@ -161,16 +161,15 @@ class KazFinTrackerDatabase {
     final db = await database;
     final result = await db.query('messages', orderBy: 'id ASC');
     return result.map((map) => map['content'] as String).toList();
-
   }
 
   Future fillDemoData({int countOfGeneratedTransaction = 10000}) async {
     // Add some fake accounts
     await _database?.execute('''
       INSERT INTO bankAccount(id, name, symbol, color, startingValue, active, mainAccount, createdAt, updatedAt) VALUES
-        (70, "Revolut", 'payments', 1, 1235.10, 1, 1, '${DateTime.now()}', '${DateTime.now()}'),
-        (71, "N26", 'credit_card', 2, 3823.56, 1, 0, '${DateTime.now()}', '${DateTime.now()}'),
-        (72, "Fineco", 'account_balance', 3, 0.00, 1, 0, '${DateTime.now()}', '${DateTime.now()}');
+        (70, "Kaspi Bank", 'payments', 1, 1235.10, 1, 1, '${DateTime.now()}', '${DateTime.now()}'),
+        (71, "Halyk Bank", 'credit_card', 2, 3823.56, 1, 0, '${DateTime.now()}', '${DateTime.now()}'),
+        (72, "Freedom Bank", 'account_balance', 3, 0.00, 1, 0, '${DateTime.now()}', '${DateTime.now()}');
     ''');
 
     // Add fake categories
@@ -187,10 +186,11 @@ class KazFinTrackerDatabase {
     // Add currencies
     await _database?.execute('''
       INSERT INTO currency(symbol, code, name, mainCurrency) VALUES
-        ("€", "EUR", "Euro", 1),
-        ("\$", "USD", "United States Dollar", 0),
+        ("€", "EUR", "Euro", 0),
+        ("\$", "USD", "United States Dollar", 1),
         ("CHF", "CHF", "Switzerland Franc", 0),
-        ("£", "GBP", "United Kingdom Pound", 0);
+        ("£", "GBP", "United Kingdom Pound", 0),
+        ("₸", "KZT", "Kazakhstani Tenge", 0);
     ''');
 
     // Add fake budgets
@@ -203,16 +203,39 @@ class KazFinTrackerDatabase {
     // Add fake transactions
     // First initialize some config stuff
     final rnd = Random();
-    var accounts = [70,71,72];
-    var outNotes = ['Grocery', 'Tolls', 'Toys', 'ETF Consultant Parcel', 'Concert', 'Clothing', 'Pizza', 'Drugs', 'Laundry', 'Taxes', 'Health insurance', 'Furniture', 'Car Fuel', 'Train', 'Amazon', 'Delivery', 'CHEK dividends', 'Babysitter', 'sono.pove.ro Fees', 'Quingentole trip'];
-    var categories = [10,11,12,13,14];
+    var accounts = [70, 71, 72];
+    var outNotes = [
+      'Grocery',
+      'Tolls',
+      'Toys',
+      'ETF Consultant Parcel',
+      'Concert',
+      'Clothing',
+      'Pizza',
+      'Drugs',
+      'Laundry',
+      'Taxes',
+      'Health insurance',
+      'Furniture',
+      'Car Fuel',
+      'Train',
+      'Amazon',
+      'Delivery',
+      'CHEK dividends',
+      'Babysitter',
+      'sono.pove.ro Fees',
+      'Quingentole trip'
+    ];
+    var categories = [10, 11, 12, 13, 14];
     double maxAmountOfSingleTransaction = 250.00;
-    int dateInPastMaxRange = (countOfGeneratedTransaction / 90 ).round() * 30; // we want simulate about 90 transactions per month
+    int dateInPastMaxRange = (countOfGeneratedTransaction / 90).round() *
+        30; // we want simulate about 90 transactions per month
     num fakeSalary = 5000;
     DateTime now = DateTime.now();
 
     // start building mega-query
-    const insertDemoTransactionsQuery = '''INSERT INTO `transaction` (date, amount, type, note, idCategory, idBankAccount, idBankAccountTransfer, recurring, recurrencyType, recurrencyPayDay, recurrencyFrom, recurrencyTo, createdAt, updatedAt) VALUES ''';
+    const insertDemoTransactionsQuery =
+        '''INSERT INTO `transaction` (date, amount, type, note, idCategory, idBankAccount, idBankAccountTransfer, recurring, recurrencyType, recurrencyPayDay, recurrencyFrom, recurrencyTo, createdAt, updatedAt) VALUES ''';
 
     // init a List with transaction values
     final List<String> demoTransactions = [];
@@ -225,7 +248,8 @@ class KazFinTrackerDatabase {
       if (rnd.nextInt(10) < 8) {
         randomAmount = rnd.nextDouble() * (19.99 - 1) + 1;
       } else {
-        randomAmount = rnd.nextDouble() * (maxAmountOfSingleTransaction - 100) + 100;
+        randomAmount =
+            rnd.nextDouble() * (maxAmountOfSingleTransaction - 100) + 100;
       }
 
       var randomType = 'OUT';
@@ -233,16 +257,20 @@ class KazFinTrackerDatabase {
       var randomNote = outNotes[rnd.nextInt(outNotes.length)];
       var randomCategory = categories[rnd.nextInt(categories.length)];
       var idBankAccountTransfer;
-      DateTime randomDate =  now.subtract(Duration(days: rnd.nextInt(dateInPastMaxRange), hours: rnd.nextInt(20), minutes: rnd.nextInt(50)));
+      DateTime randomDate = now.subtract(Duration(
+          days: rnd.nextInt(dateInPastMaxRange),
+          hours: rnd.nextInt(20),
+          minutes: rnd.nextInt(50)));
 
-      if (i % (countOfGeneratedTransaction/100) == 0) {
+      if (i % (countOfGeneratedTransaction / 100) == 0) {
         // simulating a transfer every 1% of total iterations
         randomType = 'TRSF';
         randomNote = 'Transfer';
-        randomAccount = 70; // sender account is hardcoded with the one that receives our fake salary
+        randomAccount =
+            70; // sender account is hardcoded with the one that receives our fake salary
         randomCategory = 0; // no category for transfers
         idBankAccountTransfer = accounts[rnd.nextInt(accounts.length)];
-        randomAmount = (fakeSalary/100)*70;
+        randomAmount = (fakeSalary / 100) * 70;
 
         // be sure our FROM/TO accounts are not the same
         while (idBankAccountTransfer == randomAccount) {
@@ -251,27 +279,33 @@ class KazFinTrackerDatabase {
       }
 
       // put generated transaction in our list
-      demoTransactions.add('''('$randomDate', ${randomAmount.toStringAsFixed(2)}, '$randomType', '$randomNote', $randomCategory, $randomAccount, $idBankAccountTransfer, 0, null, null, null, null, '$randomDate', '$randomDate')''');
+      demoTransactions.add(
+          '''('$randomDate', ${randomAmount.toStringAsFixed(2)}, '$randomType', '$randomNote', $randomCategory, $randomAccount, $idBankAccountTransfer, 0, null, null, null, null, '$randomDate', '$randomDate')''');
     }
 
     // add salary every month
-    for (int i = 1; i < dateInPastMaxRange/30; i++) {
-      DateTime randomDate =  now.subtract(Duration(days: 30*i));
+    for (int i = 1; i < dateInPastMaxRange / 30; i++) {
+      DateTime randomDate = now.subtract(Duration(days: 30 * i));
       var time = randomDate.toLocal();
-      DateTime salaryDateTime = DateTime(time.year, time.month, 27, time.hour, time.minute, time.second, time.millisecond, time.microsecond);
-      demoTransactions.add('''('$salaryDateTime', $fakeSalary, 'IN', 'Salary', 15, 70, null, 0, null, null, null, null, '$salaryDateTime', '$salaryDateTime')''');
+      DateTime salaryDateTime = DateTime(time.year, time.month, 27, time.hour,
+          time.minute, time.second, time.millisecond, time.microsecond);
+      demoTransactions.add(
+          '''('$salaryDateTime', $fakeSalary, 'IN', 'Salary', 15, 70, null, 0, null, null, null, null, '$salaryDateTime', '$salaryDateTime')''');
     }
 
     // add some recurring payment too
-    demoTransactions.add('''(null, 7.99, 'OUT', 'Netflix', 14, 71, null, 1, 'monthly', 19, '2022-11-14', null, '2022-11-14 03:33:36.048611', '2022-11-14 03:33:36.048611')''');
-    demoTransactions.add('''(null, 292.39, 'OUT', 'Car Loan', 13, 70, null, 1, 'monthly', 27, '2019-10-03', '2024-10-02', '2022-10-04 03:33:36.048611', '2022-10-04 03:33:36.048611')''');
+    demoTransactions.add(
+        '''(null, 7.99, 'OUT', 'Netflix', 14, 71, null, 1, 'monthly', 19, '2022-11-14', null, '2022-11-14 03:33:36.048611', '2022-11-14 03:33:36.048611')''');
+    demoTransactions.add(
+        '''(null, 292.39, 'OUT', 'Car Loan', 13, 70, null, 1, 'monthly', 27, '2019-10-03', '2024-10-02', '2022-10-04 03:33:36.048611', '2022-10-04 03:33:36.048611')''');
 
     // finalize query and write!
-    await _database?.execute("$insertDemoTransactionsQuery ${demoTransactions.join(",")};");
+    await _database?.execute(
+        "$insertDemoTransactionsQuery ${demoTransactions.join(",")};");
   }
 
   Future clearDatabase() async {
-    try{
+    try {
       await _database?.transaction((txn) async {
         var batch = txn.batch();
         batch.delete(bankAccountTable);
@@ -282,7 +316,7 @@ class KazFinTrackerDatabase {
         batch.delete(currencyTable);
         await batch.commit();
       });
-    } catch(error){
+    } catch (error) {
       throw Exception('DbBase.cleanDatabase: $error');
     }
   }

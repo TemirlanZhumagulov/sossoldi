@@ -6,17 +6,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sossoldi/providers/statistics_provider.dart';
 
 import '../constants/style.dart';
-import '../custom_widgets/alert_dialog.dart';
 import '../custom_widgets/default_card.dart';
-import '../database/kazfintracker_database.dart';
-import '../providers/accounts_provider.dart';
-import '../providers/budgets_provider.dart';
-import '../providers/categories_provider.dart';
-import '../providers/dashboard_provider.dart';
-import '../providers/transactions_provider.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -173,38 +165,38 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           ],
         ),
       ),
-      bottomSheet: Container(
-        color: Colors.deepOrangeAccent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            const Text(
-              '[DEV ONLY]\nDANGEROUS\nZONE',
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.yellowAccent,
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 3.0,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  ),
-                ],
-              ),
-              textAlign: TextAlign.center,
-            ),
-            ElevatedButton(
-              child: const Text('CLEAR DB'),
-              onPressed: () async {
-                await KazFinTrackerDatabase.instance.clearDatabase().then((v) {
-                  ref.refresh(accountsProvider);
-                  ref.refresh(categoriesProvider);
-                  ref.refresh(transactionsProvider);
-                  ref.refresh(budgetsProvider);
-                  showSuccessDialog(context, "DB Cleared");
-                });
-              },
-            ),
+      // bottomSheet: Container(
+      //   color: Colors.deepOrangeAccent,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //     children: <Widget>[
+      //       const Text(
+      //         '[DEV ONLY]\nDANGEROUS\nZONE',
+      //         style: TextStyle(
+      //           fontSize: 11,
+      //           color: Colors.yellowAccent,
+      //           shadows: <Shadow>[
+      //             Shadow(
+      //               offset: Offset(1.0, 1.0),
+      //               blurRadius: 3.0,
+      //               color: Color.fromARGB(255, 0, 0, 0),
+      //             ),
+      //           ],
+      //         ),
+      //         textAlign: TextAlign.center,
+      //       ),
+      //       ElevatedButton(
+      //         child: const Text('CLEAR DB'),
+      //         onPressed: () async {
+      //           await KazFinTrackerDatabase.instance.clearDatabase().then((v) {
+      //             ref.refresh(accountsProvider);
+      //             ref.refresh(categoriesProvider);
+      //             ref.refresh(transactionsProvider);
+      //             ref.refresh(budgetsProvider);
+      //             showSuccessDialog(context, "DB Cleared");
+      //           });
+      //         },
+      //       ),
             // ElevatedButton(
             //   child: const Text('CLEAR AND FILL DEMO DATA'),
             //   onPressed: () async {
@@ -221,9 +213,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             //     });
             //   },
             // ),
-          ],
-        ),
-      ),
+    //       ],
+    //     ),
+    //   ),
     );
   }
 }

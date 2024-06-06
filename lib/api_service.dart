@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'authentication_service.dart';
 
 class ApiService {
-  final String baseUrl = 'http://192.168.26.215:8081'; // Change IP accordingly
+  final String baseUrl = 'http://192.168.89.167:8081'; // Change IP accordingly
 
 
   Future<File> downloadFile(String filename) async {
@@ -52,13 +52,12 @@ class ApiService {
     final response = await http.post(
       Uri.parse('$baseUrl/v1/api/chat'),
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: json.encode(message),
+      body: message,
     );
     if (response.statusCode == 200) {
-      return json.decode(response.body)['response'];
+      return response.body;
     } else {
       throw Exception('Failed to send message: ${response.statusCode}');
     }
